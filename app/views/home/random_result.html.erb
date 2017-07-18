@@ -1,0 +1,171 @@
+<div class="col-xs-12 col-md-4">
+
+<% @store.each do |s| %>
+<div id="map" style="width:100%;height:190px;"></div>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=0b58c8ba3fb90f0366a18acfd91d2995&libraries=services,drawing"></script>
+<script>
+$( document ).ready(function() {
+    var store_address = "<%= s.address %>"
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };  
+    
+    // 지도를 생성합니다    
+    var map = new daum.maps.Map(mapContainer, mapOption); 
+    
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new daum.maps.services.Geocoder();
+    
+    // 주소로 좌표를 검색합니다
+    geocoder.addr2coord(store_address, function(status, result) {
+    
+        // 정상적으로 검색이 완료됐으면 
+         if (status === daum.maps.services.Status.OK) {
+    
+            var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+    
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new daum.maps.Marker({
+                map: map,
+                position: coords
+            });
+    
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new daum.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">요깄네</div>'
+            });
+            infowindow.open(map, marker);
+    
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+        } 
+    });
+});
+</script>
+
+
+    <h5><%= s.store_name %></h5>
+    <p class="detail"><%= s.food_category %> | <%= s.distance %>거리
+  
+    <div class="help-tip">
+    <p>서울과기대 정문 기준</p>
+    </div></p>
+    
+    <p><i class="tiny material-icons icon-pink">room</i><%= s.address %><br></p>
+    <p><i class="tiny material-icons icon-pink">call</i><%= s.tel_number %><br></p>
+    <p><i class="tiny material-icons icon-pink">label</i><%= s.keyword %><br></p>
+    <p><i class="tiny material-icons icon-pink">query_builder</i><%= s.opentime %> | 휴무 <%= s.closed_holiday %><br></p>
+    <p class="break">(break time <%= s.breaktime %>)</p>
+    
+    
+    
+<% end %>
+</div>
+
+<style>
+    h5 {
+        padding-top: 10px;
+    }
+    i.icon-pink {
+        color : #ee6e73;
+        padding-left: 2px;
+        padding-right: 5px;
+        padding-bottom: 0px;
+      
+    }
+    p {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+    p.break {
+        padding-left: 25px;
+    }
+    p.detail {
+       padding-left: 70%;
+    }
+    
+.help-tip{
+    position: absolute;
+    top: 60%;
+    right: 1%;
+    text-align: center;
+    background-color: #BCDBEA;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    line-height: 16px;
+    cursor: default;
+}
+
+.help-tip:before{
+    content:'?';
+    font-weight: bold;
+    color:#fff;
+}
+
+.help-tip:hover p{
+    display:block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p{    /* The tooltip */
+    display: none;
+    text-align: left;
+    background-color: #1E2021;
+    padding: 10px;
+    width: 125px;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: -4px;
+    color: #FFF;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.help-tip p:before{ /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#1E2021;
+    right:10px;
+    top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+    width:100%;
+    height:40px;
+    content:'';
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+
+/* CSS animation */
+
+@-webkit-keyframes fadeIn {
+    0% { 
+        opacity:0; 
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity:100%;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity:0; }
+    100% { opacity:100%; }
+}
+</style>

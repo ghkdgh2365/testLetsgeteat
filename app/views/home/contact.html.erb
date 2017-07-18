@@ -1,0 +1,45 @@
+
+<form action="/home/write" method="post">
+    <div class="row" style="padding-top:30px;">
+      <div class="col-xs-12 col-md-4">
+      <h5><b>문의사항 및 의견보내기</b></h5><hr>
+      <div class="col-xs-6 col-md-4">
+        
+       
+       <!-- <label>Browser Select</label> -->
+         <select class="browser-default" name="ask_category" style="height:30px;">
+            <option value="" disabled selected>카테고리</option>
+            <option value=1>내용정정</option>
+            <option value=2>오류</option>
+            <option value=3>기타</option>
+          </select> 
+     </div>
+     
+     <div class="col-xs-12 col-md-8">
+        <div class="form-group">
+        <label for="exampleInputEmail1">제목</label>
+        <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="제목을 입력해주세요">
+        </div>
+        <label for="exampleInputEmail1">내용</label>
+        <textarea class="form-control" name="content" rows="8" placeholder="내용을 입력해주세요"></textarea>
+         <div class="form-group" style="margin-top: 20px;">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here.</p>
+         </div>
+     </div>
+       
+      <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-0"> 
+          <button class="btn waves-effect waves-light" type="submit" name="action">제출
+            <i class="material-icons right">send</i>
+          </button>
+      </div>
+    </div>
+</form>
+
+<style>
+    select {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>

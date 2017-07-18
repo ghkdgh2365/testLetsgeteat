@@ -1,0 +1,7 @@
+<div class="container" style="padding-top:50px;">
+    <div class="col-xs-12 col-md-4">
+    <h5><b><%= @one_post.title %></b></h5>
+    <%= @one_post.user.present? ? @one_post.user.email : "an anonymous user" %><hr>
+    <%= @one_post.content %>
+    </div>
+</div>

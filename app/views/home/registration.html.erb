@@ -1,0 +1,32 @@
+
+<form action="/home/write" method="post">
+    <div class="row" style="padding-top:30px;">
+      <div class="col-xs-12 col-md-4">
+      <h5><b>가게 등록</b></h5><hr>
+    
+     <div class="col-xs-12 col-md-8">
+        <div class="form-group">
+        <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="제목">
+        </div>   
+        <textarea class="form-control" name="content" rows="8" placeholder="내용을 입력해주세요"></textarea>
+         <div class="form-group" style="margin-top: 20px;">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here.</p>
+         </div>
+     </div>
+       
+      <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-0"> 
+          <button class="btn waves-effect waves-light" type="submit" name="action">제출
+            <i class="material-icons right">send</i>
+          </button>
+      </div>
+    </div>
+</form>
+
+<style>
+    select {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
