@@ -1,17 +1,17 @@
 <div class="container">
 	<div class="row">
         <div class="col s12 text center">
-    		<h5><b>식당 & 키워드 검색</b></h5>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="냉면" />
-                    <span class="input-group-btn">
-                        <a href="#" class="btn btn btn-md" role="button">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </a>
-                    </span>
+    		<h5>식당 & 키워드 검색</h5>
+                <div id="custom-search-input">
+                    <form action="/home/search_result" method="get">
+                        <div class="input-group col-md-12">
+                            <input type="text" name="search_word" class="form-control input-lg" placeholder="냉면" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn btn-md" role="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
                 </div>
-            </div>
         </div>
 	</div>
 </div>

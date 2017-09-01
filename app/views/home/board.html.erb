@@ -9,7 +9,7 @@
          </tr>
      </thead>
       <tbody>
-          <% @post.each do |post| %>
+          <% @posts.each do |post| %>
           <tr>
            <% if post.ask_category_cd == nil %><td>카테고리</td><% end %>
            <% if post.ask_category_cd == 1%><td>내용정정</td><% end %>

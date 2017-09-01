@@ -1,0 +1,78 @@
+<div class="container">
+	<div class="row">
+        <div class="col s12">
+    		<h5>식당 & 키워드 검색</h5>
+            <div id="custom-search-input">
+                <form action="/home/search_result" method="get">
+                    <div class="input-group col-md-12">
+                        <input type="text" name="search_word" class="form-control input-lg" placeholder="냉면" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn btn-md" role="button"><i class="glyphicon glyphicon-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <% if @search_word != "" %>
+                <% @search_store_result.each do |ssr| %>
+                <hr>
+                <a href="/home/search_result_store/<%= ssr.id %>">
+                <div>
+                    <span style="text-align: left;"><%= ssr.store_name %></span>
+                </div>
+                </a>
+                <% end %>
+            <% else %>
+                "검색어를 입력해주세요."
+            <% end %>
+        </div>
+	</div>
+</div>
+
+<style>
+    h5 {
+        padding-top: 80px;
+        padding-bottom: 40px;
+        text-align: center;
+        
+    }
+ 
+    
+    #custom-search-input{
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 15px;
+}
+
+.search_name{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+</style>

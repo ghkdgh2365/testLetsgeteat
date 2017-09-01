@@ -4,16 +4,22 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'home/random_result'
-
+  post 'home/review_write'
   get 'home/search'
+  get 'home/search_result'
   get 'home/contact'
   get 'home/introduction'
   get 'home/registration'
+  get 'home/search_condition'
+  post 'home/search_result_store/review_write' => 'home#review_write'
   
+  get 'home/condition' => 'home#condition'
   post 'home/write' => 'home#write'
   get 'home/board' => 'home#board'
   get 'home/ask_show/:post_id' => 'home#ask_show'
   get 'home/input_db'
+  get 'home/search_result_store/:ssr_id' => 'home#search_result_store'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
