@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem "handle_invalid_percent_encoding_requests"
-
+gem "figaro"
 gem 'devise'     # 회원가입 및 인증
 gem 'rolify'     # role 관리
 gem 'authority'  # 권한설정
