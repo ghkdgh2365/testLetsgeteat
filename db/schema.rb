@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20170818103757) do
     t.string   "keyword",        default: "--- []\n"
     t.string   "closed_holiday"
     t.string   "food_category"
-    t.string   "distance"
+    t.string   "distance",       default: "--- []\n"
     t.string   "breaktime"
     t.string   "opentime"
     t.string   "address"

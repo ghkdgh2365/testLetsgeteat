@@ -6,7 +6,7 @@ class CreateStores < ActiveRecord::Migration
       t.string :keyword, array: true, default: []
       t.string :closed_holiday
       t.string :food_category
-      t.string :distance
+      t.string :distance, array: true, default: []
       t.string :breaktime
       t.string :opentime
       t.string :address
