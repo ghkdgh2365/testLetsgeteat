@@ -1,18 +1,75 @@
 <div class="container">
 	<div class="row">
         <div class="col s12">
-    		<h5>식당 & 키워드 검색</h5>
+    		<!--<h5>식당 & 키워드 검색</h5>-->
+    		<h5></h5>
             <div id="custom-search-input">
                 <form action="/home/search_result" method="get">
                     <div class="input-group col-md-12">
-                        <input type="text" name="search_word" class="form-control input-lg" placeholder="냉면" />
+                        <input type="text" name="search_word" class="form-control input-lg" placeholder="가게명 또는 키워드" />
                         <span class="input-group-btn">
                             <button type="submit" class="btn btn btn-md" role="button"><i class="glyphicon glyphicon-search"></i></button>
                         </span>
                     </div>
                 </form>
             </div>
-            <% if @search_word != "" %>
+        </div>
+        <div class="col s12 text center">
+            <ul class="collapsible" data-collapsible="accordion" style="box-shadow: none;">
+        			<li>
+        			<div class="collapsible-header">
+        				조건 검색
+        			</div>
+        			<div class="collapsible-body">
+        				<span>
+        				<form action="/home/search_condition" method="get">
+        				    <div class="multiselect">
+            				    <input type="checkbox" class="filled-in" id="filled-in-box1" name="boxbox[]" value="all" />
+                                <label for="filled-in-box1">전체</label>
+                                <input type="checkbox" class="filled-in" id="filled-in-box2" name="boxbox[]" value="한식"/>
+                                <label for="filled-in-box2">한식</label>
+            					<input type="checkbox" class="filled-in" id="filled-in-box3" name="boxbox[]" value="일식"/>
+                                <label for="filled-in-box3">일식</label>
+            					<input type="checkbox" class="filled-in" id="filled-in-box4" name="boxbox[]" value="양식"/>
+                                <label for="filled-in-box4">양식</label>
+            					<input type="checkbox" class="filled-in" id="filled-in-box5" name="boxbox[]" value="중식"/>
+                                <label for="filled-in-box5">중식</label>
+            					<input type="checkbox" class="filled-in" id="filled-in-box6" name="boxbox[]" value="분식"/>
+                                <label for="filled-in-box6">분식</label>
+            					<input type="checkbox" class="filled-in" id="filled-in-box7" name="boxbox[]" value="기타"/>
+                                <label for="filled-in-box7">기타</label>
+                            </div>
+        					<hr>
+        					    <input type="checkbox" class="filled-in" id="walk-box0" name="walkbox[]" value="배달"/>
+                                <label for="walk-box0">배달</label>
+            					<input type="checkbox" class="filled-in" id="walk-box1" name="walkbox[]" value="5분"/>
+                                <label for="walk-box1">5분</label>
+            					<input type="checkbox" class="filled-in" id="walk-box2" name="walkbox[]" value="10분"/>
+                                <label for="walk-box2">10분</label>
+            					<input type="checkbox" class="filled-in" id="walk-box3" name="walkbox[]" value="15분"/>
+                                <label for="walk-box3">15분이상</label>
+        					    <hr>
+            					<div class="abgne-menu-20140101-2">
+            					  <input type="checkbox" id="price1" name="pricebox[]" value="1">
+            					  <label for="price1">$</label>
+            					
+            					  <input type="checkbox" id="price2" name="pricebox[]"value="2">
+            					  <label for="price2">$$</label>
+            					
+            					  <input type="checkbox" id="price3" name="pricebox[]"value="3">
+            					  <label for="price3">$$$</label>
+            					
+            					</div>
+            		
+        					<div class="search_option" type="submit" name="">
+        					    <button type="submit" class="btn waves-effect waves-light" role="button" style="width:100%;">조건 검색</button>
+        					</div>
+        				</form>
+        			</div>
+        		    </span>
+        		</li>
+        	</ul>
+        	<% if @search_word != "" %>
                 <% @search_store_result.each do |ssr| %>
                 <hr>
                 <a href="/home/search_result_store/<%= ssr.id %>">
@@ -28,6 +85,43 @@
 	</div>
 </div>
 
+<script>
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+
+$(".button-collapse").sideNav();
+
+$(document).ready(function(){
+    //최상단 체크박스 클릭
+    $("#filled-in-box1").click(function(){
+        //클릭되었으면
+        if($("#filled-in-box1").prop("checked")){
+            //input태그의 name이 boxbox인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[class=filled-in]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 boxbox인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[class=filled-in]").prop("checked",false);
+        }
+    })
+})
+
+
+var send_array = Array();
+var send_cnt = 0;
+var chkbox = $(".filled-in");
+
+for(i=0;i<chkbox.length;i++) {
+    if (chkbox[i].checked == true){
+        send_array[send_cnt] = chkbox[i].value;
+        send_cnt++;
+    }
+}
+
+$("#array").val(send_array);
+
+</script>
 <style>
     h5 {
         padding-top: 80px;
@@ -69,10 +163,205 @@
     font-size: 15px;
 }
 
-.search_name{
-    font-size: 17px;
-    font-weight: bold;
+[type="checkbox"]+label{
+    padding-left: 25px;
+    padding-right: 35px;
+}
+h5 {
+        padding-top: 10px;
+    }
+i.icon-pink {
+        color : #ee6e73;
+        padding-left: 2px;
+        padding-right: 5px;
+        padding-bottom: 0px;
+      
+    }
+p {
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+p.break {
+        padding-left: 25px;
+    }
+p.detail {
+
+    }
+
+#detail_tip{
+    text-align: right;
 }
 
+.detail,
+.help-tip{
+    display: inline-block;
+    
+}
+.help-tip{
+    
+    top: 60%;
+    right: 1%;
+    text-align: center;
+    background-color: #BCDBEA;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    line-height: 16px;
+    cursor: default;
+}
+
+.help-tip:before{
+    content:'?';
+    font-weight: bold;
+    color:#fff;
+}
+
+.help-tip:hover p{
+    display:block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p{    /* The tooltip */
+    display: none;
+    background-color: #1E2021;
+    padding: 10px;
+    width: 125px;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: 7px;
+    color: #FFF;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.help-tip p:before{ /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#1E2021;
+    right:10px;
+    top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+    width:100%;
+    height:40px;
+    content:'';
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+
+@-webkit-keyframes fadeIn {
+    0% { 
+        opacity:0; 
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity:100%;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity:0; }
+    100% { opacity:100%; }
+}
+   
+.collapsible-header{
+             text-align:center;
+             color: #ee6e73;
+          }
+.collapsible-body{
+    padding: 1rem;
+}          
+#review{
+    width:80%;
+}
+ul#myList{
+    padding-top:10px;
+}         
+.ui-widget-header{
+    background: #ee6e73;
+  }
+.panel-body{
+    text-align: left;
+}
+.panelheader{
+    padding-bottom: 7px;
+}
+
+#profile{
+    padding-top: 20px;
+}
+
+.search_option{
+    padding-top: 10px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    min-height: 2rem;
+    line-height: 2.5rem;
+    border-top: 1px solid #ddd;
+    font-weight: bold;
+    
+}
+
+label{
+	color: black;
+	font-weight: 500;
+}
+ .abgne-menu-20140101-2 input[type="checkbox"] {
+    display: none;
+}
+.abgne-menu-20140101-2 input[type="checkbox"] + label {
+    display: inline-block;
+    background-color: #fff;
+    cursor: pointer;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    font-size: 13px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+
+}
+.abgne-menu-20140101-2 input[type="checkbox"]:checked + label {
+    background-color: #4a4646;
+    color: #fff;
+}
+
+[type="checkbox"]:checked+label:before {
+	display: none;
+
+}
+
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after{
+	display: none;
+}
+
+table{
+    border-color: #F8F8FF;
+}
+
+td{
+    padding: 9px 30px;
+}
+
+@media (min-width: 800px) {
+    #randompage{
+    width: 80%;
+    padding-left: 20%
+    }
+}
 
 </style>

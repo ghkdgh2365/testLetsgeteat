@@ -59,6 +59,7 @@ class HomeController < ApplicationController
   
   def search_result
     @search_word = params[:search_word]
+    
     @search_store_result= Store.where("store_name LIKE ? or keyword LIKE ?", "%#{@search_word}%", "%#{@search_word}%")
 
   end
@@ -66,22 +67,21 @@ class HomeController < ApplicationController
   def search_condition
     @walk = params[:walkbox]
     @food_category = params[:boxbox]
-    # 버전 1
-    if @walk == nil && @food_category == nil
-      @search_condition = Store.all
-    else
-      if @walk != nil && @food_category != nil
-        @search_condition = @search_condition = Store.where(food_category: [@food_category], distance: [@walk])
-      else
-        if @walk == nil
-          @search_condition = Store.where(food_category: [@food_category])
-        else
-          @search_condition = Store.where(distance: [@walk])
-        end
-      end
+    @price= params[:pricebox]
+    if @walk == nil
+      @walk = ['배달','5분','10분','15분']
+    end
+    if @food_category == nil
+      @food_category = ['한식', '일식', '중식', '양식', '분식', '기타']
+    end
+    @price1 = 1
+    @price2 = 2
+    @price3 = 3
+    if @price == nil
+      @price = [@price1, @price2, @price3]
     end
     
-    @condition = @search_condition.sample(1)
+    @stores = Store.where(food_category: [@food_category], distance: [@walk], price_feel: [@price])
     
     # 필요없는거
     #@search_condition = @stores.rand(food_category: ['한식','중식'])
