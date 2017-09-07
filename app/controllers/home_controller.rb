@@ -5,9 +5,37 @@ class HomeController < ApplicationController
   end
 
   def random_result
-    @walk = params[:walkbox]
+    @walk0 = params[:walkbox0]
+    @walk1 = params[:walkbox1]
+    @walk2 = params[:walkbox2]
+    @walk3 = params[:walkbox3]
     @food_category = params[:boxbox]
     @price= params[:pricebox]
+    unless @walk0 == nil && @walk1 == nil && @walk2 == nil && @walk3 == nil && @food_category == nil && @price == nil
+      if @walk0 == nil && @walk1 == nil && @walk2 == nil && @walk3 == nil
+        @walk0 = '배달'
+        @walk1 = '5분'
+        @walk2 = '10분'
+        @walk3 = '15분'
+      end
+      if @food_category == nil
+        @food_category = ['한식', '일식', '중식', '양식', '분식', '기타']
+      end
+      @price1 = 1
+      @price2 = 2
+      @price3 = 3
+      if @price == nil
+        @price = [@price1, @price2, @price3]
+      end
+    end
+    
+    @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "%#{@walk0}%", "%#{@walk1}%", "%#{@walk2}%", "%#{@walk3}%")
+    @store = @stores.sample(1)
+    @store.each do |s|
+      @store_id = s.id
+    end
+    @menus = Menu.all
+    @reviews = Review.where(store_id: @store_id).all.order(created_at: :desc)
     # 버전 1
     # if @walk == nil && @food_category == nil
     #   @stores = Store.all
@@ -22,26 +50,7 @@ class HomeController < ApplicationController
     #     end
     #   end
     # end
-    #버전2
-    if @walk == nil
-      @walk = ['배달','5분','10분','15분']
-    end
-    if @food_category == nil
-      @food_category = ['한식', '일식', '중식', '양식', '분식', '기타']
-    end
-    @price1 = 1
-    @price2 = 2
-    @price3 = 3
-    if @price == nil
-      @price = [@price1, @price2, @price3]
-    end
-    @stores = Store.where(food_category: [@food_category], distance: [@walk], price_feel: [@price])
-    @store = @stores.sample(1)
-    @store.each do |s|
-      @store_id = s.id
-    end
-    @menus = Menu.all
-    @reviews = Review.where(store_id: @store_id).all.order(created_at: :desc)
+    
   end
   
   def review_write
@@ -59,29 +68,37 @@ class HomeController < ApplicationController
   
   def search_result
     @search_word = params[:search_word]
-    
-    @search_store_result= Store.where("store_name LIKE ? or keyword LIKE ?", "%#{@search_word}%", "%#{@search_word}%")
-
+    unless @search_word == nil
+      @search_store_result= Store.where("store_name LIKE ? or keyword LIKE ?", "%#{@search_word}%", "%#{@search_word}%")
+    end
   end
   
   def search_condition
-    @walk = params[:walkbox]
+    @walk0 = params[:walkbox0]
+    @walk1 = params[:walkbox1]
+    @walk2 = params[:walkbox2]
+    @walk3 = params[:walkbox3]
     @food_category = params[:boxbox]
     @price= params[:pricebox]
-    if @walk == nil
-      @walk = ['배달','5분','10분','15분']
-    end
-    if @food_category == nil
-      @food_category = ['한식', '일식', '중식', '양식', '분식', '기타']
-    end
-    @price1 = 1
-    @price2 = 2
-    @price3 = 3
-    if @price == nil
-      @price = [@price1, @price2, @price3]
+    unless @walk0 == nil && @walk1 == nil && @walk2 == nil && @walk3 == nil && @food_category == nil && @price == nil
+      if @walk0 == nil && @walk1 == nil && @walk2 == nil && @walk3 == nil
+        @walk0 = '배달'
+        @walk1 = '5분'
+        @walk2 = '10분'
+        @walk3 = '15분'
+      end
+      if @food_category == nil
+        @food_category = ['한식', '일식', '중식', '양식', '분식', '기타']
+      end
+      @price1 = 1
+      @price2 = 2
+      @price3 = 3
+      if @price == nil
+        @price = [@price1, @price2, @price3]
+      end
     end
     
-    @stores = Store.where(food_category: [@food_category], distance: [@walk], price_feel: [@price])
+    @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "%#{@walk0}%", "%#{@walk1}%", "%#{@walk2}%", "%#{@walk3}%")
     
     # 필요없는거
     #@search_condition = @stores.rand(food_category: ['한식','중식'])

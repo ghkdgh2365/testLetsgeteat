@@ -99,8 +99,8 @@ ath.intl = {
  	},
 
 	ko_kr: {
-		ios: '홈 화면에 바로가기 생성: %icon 을 클릭한 후 <strong>홈 화면에 추가</strong>.',
-		android: '브라우저 옵션 메뉴의 <string>홈 화면에 추가</string>를 클릭하여 홈화면에 바로가기를 생성할 수 있습니다. <small>옵션 메뉴는 장치의 메뉴 버튼을 누르거나 오른쪽 상단의 메뉴 아이콘 %icon을 클릭하여 접근할 수 있습니다.</small>'
+		ios: '홈 화면에 바로가기 생성: %icon 을 클릭한 후 <strong>홈 화면에 추가</strong>.(safari에서 가능)',
+		android: '브라우저 옵션 메뉴의 <string>홈 화면에 추가</string>를 클릭하여 홈화면에 바로가기를 생성할 수 있습니다. <small>옵션 메뉴는 장치의 메뉴 버튼을 누르거나 오른쪽 상단의 메뉴 아이콘 %icon을 클릭하여 접근할 수 있습니다.</small>(브라우저에서 가능)'
 	},
 
 	nb_no: {
@@ -174,7 +174,7 @@ ath.defaults = {
 	mandatory: false,			// you can't proceed if you don't add the app to the homescreen
 	autostart: true,			// show the message automatically
 	skipFirstVisit: false,		// show only to returning visitors (ie: skip the first time you visit)
-	startDelay: 1,				// display the message after that many seconds from page load
+	startDelay: 0.1,				// display the message after that many seconds from page load
 	lifespan: 15,				// life of the message in seconds
 	displayPace: 1,			// minutes before the message is shown again (0: display every time, default 24 hours)
 	maxDisplayCount: 0,			// absolute maximum number of times the message will be shown to the user (0: no limit)
