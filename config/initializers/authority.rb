@@ -29,7 +29,10 @@ Authority.configure do |config|
     :update  => 'update',
     :destroy => 'delete',
     :board => 'update',
-    :input_db => 'update'
+    :input_db => 'update',
+    :ask_show => 'update',
+    :store_edit => 'update',
+    :store_update => 'update'
   }
 
   # ABILITIES

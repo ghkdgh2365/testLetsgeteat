@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   require 'csv'
-  before_action :authenticate_user!, only: [ :review_write, :write, :registration, :board]
+  before_action :authenticate_user!, only: [ :review_write, :write, :registration, :board, :ask_show]
   def index
   end
 
@@ -143,18 +143,41 @@ class HomeController < ApplicationController
   end
   
   def ask_show
+    @post = Ask.new
+    authorize_action_for @post
     @one_post = Ask.find(params[:post_id])
   end
   
   def search_result_store
     @one_result = Store.find(params[:ssr_id])
-    
     @store_id = @one_result.id
     @menus = Menu.all
     @reviews = Review.where(store_id: @store_id).all.order(created_at: :desc)
-    
-    
   end 
+  
+  def store_edit
+    @post = Ask.new
+    authorize_action_for @post
+    @store = Store.find(params[:id])
+  end
+  
+  def store_update
+    @post = Ask.new
+    authorize_action_for @post
+    @store = Store.find(params[:id])
+    @store.store_name = params[:store_name]
+    @store.tel_number = params[:tel_number]
+    @store.keyword = params[:keyword]
+    @store.closed_holiday = params[:closed_holiday]
+    @store.food_category = params[:food_category]
+    @store.distance = params[:distance]
+    @store.breaktime = params[:breaktime]
+    @store.opentime = params[:opentime]
+    @store.address = params[:address]
+    
+    @store.save
+    redirect_to '/home/board'
+  end
   
   def input_db
     @post = Ask.new

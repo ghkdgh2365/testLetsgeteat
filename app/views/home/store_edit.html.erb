@@ -1,0 +1,42 @@
+<div class="container">
+    <form action="/home/store_update/<%= @store.id %>" method="post">
+      <div class="form-group">
+        <label for="store_name">가게명</label>
+        <input type="text" class="form-control" id="store_name" name="store_name" value="<%= @store.store_name %>">
+      </div>
+      <div class="form-group">
+        <label for="tel_number">전화번호</label>
+        <input type="text" class="form-control" id="tel_number" name="tel_number" value="<%= @store.tel_number %>">
+      </div>
+      <div class="form-group">
+        <label for="keyword">키워드</label>
+        <input type="text" class="form-control" id="keyword" name="keyword" value="<%= @store.keyword %>">
+      </div>
+      <div class="form-group">
+        <label for="closed_holiday">휴무일</label>
+        <input type="text" class="form-control" id="closed_holiday" name="closed_holiday" value="<%= @store.closed_holiday %>">
+      </div>
+      <div class="form-group">
+        <label for="food_category">카테고리</label>
+        <input type="text" class="form-control" id="food_category" name="food_category" value="<%= @store.food_category %>">
+      </div>
+      <div class="form-group">
+        <label for="distance">거리</label>
+        <input type="text" class="form-control" id="distance" name="distance" value="<%= @store.distance %>">
+      </div>
+      <div class="form-group">
+        <label for="breaktime">브레이크타임</label>
+        <input type="text" class="form-control" id="breaktime" name="breaktime" value="<%= @store.breaktime %>">
+      </div>
+      <div class="form-group">
+        <label for="opentime">오픈타임</label>
+        <input type="text" class="form-control" id="opentime" name="opentime" value="<%= @store.opentime %>">
+      </div>
+      <div class="form-group">
+        <label for="address">주소</label>
+        <input type="text" class="form-control" id="address" name="address" value="<%= @store.address %>">
+      </div>
+      <button type="submit" class="btn">수정하기</button>
+    </form>
+    <a href="/home/board">뒤로가기</a>
+</div>

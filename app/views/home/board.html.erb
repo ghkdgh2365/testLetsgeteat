@@ -38,6 +38,7 @@
        <table class="table table-hover">
            <thead>
                <tr>
+                   <th>No.</th>
                    <th>가게이름</th>
                    <th>전화번호</th>
                    <th>키워드</th>
@@ -48,11 +49,13 @@
                    <th>여는시간</th>
                    <th>주소</th>
                    <th>가격정도</th>
+                   <th>수정</th>
                </tr>
            </thead>
            <tbody>
             <% @stores.each do |s| %>
                <tr>
+                 <td><%= s.id %></td>
                  <td><a href="/home/search_result_store/<%= s.id %>"><%= s.store_name %></a></td> 
                  <td><%= s.tel_number %></td>
                  <td><%= s.keyword %></td>
@@ -63,6 +66,7 @@
                  <td><%= s.opentime %></td>
                  <td><%= s.address %></td>
                  <td><%= s.price_feel %></td>
+                 <td><a href="/home/store_edit/<%= s.id %>">수정</a></td>
                </tr>
             <% end %>
            </tbody>
