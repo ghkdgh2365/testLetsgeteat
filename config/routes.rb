@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'home/random_result'
+  get 'home/condition_random_result'
   post 'home/review_write'
   get 'home/search'
   get 'home/search_result'

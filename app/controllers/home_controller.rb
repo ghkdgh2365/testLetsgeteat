@@ -5,6 +5,16 @@ class HomeController < ApplicationController
   end
 
   def random_result
+    @stores = Store.all
+    @store = @stores.sample(1)
+    @store.each do |s|
+      @store_id = s.id
+    end
+    @menus = Menu.all
+    @reviews = Review.where(store_id: @store_id).all.order(created_at: :desc)
+  end
+  
+  def condition_random_result
     @walk0 = params[:walkbox0]
     @walk1 = params[:walkbox1]
     @walk2 = params[:walkbox2]
@@ -28,7 +38,6 @@ class HomeController < ApplicationController
         @price = [@price1, @price2, @price3]
       end
     end
-    
     @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "%#{@walk0}%", "%#{@walk1}%", "%#{@walk2}%", "%#{@walk3}%")
     @store = @stores.sample(1)
     @store.each do |s|
@@ -50,9 +59,7 @@ class HomeController < ApplicationController
     #     end
     #   end
     # end
-    
   end
-  
   def review_write
     @review = Review.new
     @review.content = params[:content]
