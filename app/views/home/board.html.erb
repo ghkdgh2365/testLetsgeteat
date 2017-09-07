@@ -1,32 +1,149 @@
-
-  <table class="table table-hover">
-      
-     <thead>
-         <tr>
-             <th>카테고리</th>
-             <th>제목</th>
-             <th>날짜</th>
-         </tr>
-     </thead>
-      <tbody>
-          <% @posts.each do |post| %>
-          <tr>
-           <% if post.ask_category_cd == nil %><td>카테고리</td><% end %>
-           <% if post.ask_category_cd == 1%><td>내용정정</td><% end %>
-           <% if post.ask_category_cd == 2%><td>오류</td><% end %>
-           <% if post.ask_category_cd == 3%><td>기타</td><% end %>
-            <td><a href="/home/ask_show/<%= post.id %>">
-            <%= post.title %>
-            </a></td> 
-            <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
-          </tr>
-          
-      </tbody>
-      <% end %>
-  </table>
+  <div>
+  <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#ask" aria-controls="ask" role="tab" data-toggle="tab">문의 및 건의사항</a></li>
+      <li role="presentation"><a href="#store" aria-controls="store" role="tab" data-toggle="tab">가게정보</a></li>
+      <li role="presentation"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab">메뉴정보</a></li>
+      <li role="presentation"><a href="#user" aria-controls="user" role="tab" data-toggle="tab">회원정보</a></li>
+      <li role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab">리뷰정보</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="ask">
+        <table class="table table-hover">
+           <thead>
+               <tr>
+                   <th>카테고리</th>
+                   <th>제목</th>
+                   <th>날짜</th>
+               </tr>
+           </thead>
+           <tbody>
+            <% @posts.each do |post| %>
+               <tr>
+                <% if post.ask_category_cd == nil %><td>카테고리</td><% end %>
+                <% if post.ask_category_cd == 1%><td>내용정정</td><% end %>
+                <% if post.ask_category_cd == 2%><td>오류</td><% end %>
+                <% if post.ask_category_cd == 3%><td>기타</td><% end %>
+                 <td><a href="/home/ask_show/<%= post.id %>">
+                 <%= post.title %>
+                 </a></td> 
+                 <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
+               </tr>
+            <% end %>
+           </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="store">
+       <table class="table table-hover">
+           <thead>
+               <tr>
+                   <th>가게이름</th>
+                   <th>전화번호</th>
+                   <th>키워드</th>
+                   <th>휴무일</th>
+                   <th>카테고리</th>
+                   <th>거리</th>
+                   <th>브레이크타임</th>
+                   <th>여는시간</th>
+                   <th>주소</th>
+                   <th>가격정도</th>
+               </tr>
+           </thead>
+           <tbody>
+            <% @stores.each do |s| %>
+               <tr>
+                 <td><a href="/home/search_result_store/<%= s.id %>"><%= s.store_name %></a></td> 
+                 <td><%= s.tel_number %></td>
+                 <td><%= s.keyword %></td>
+                 <td><%= s.closed_holiday %></td>
+                 <td><%= s.food_category %></td>
+                 <td><%= s.distance %></td>
+                 <td><%= s.breaktime %></td>
+                 <td><%= s.opentime %></td>
+                 <td><%= s.address %></td>
+                 <td><%= s.price_feel %></td>
+               </tr>
+            <% end %>
+           </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="menu">
+       <table class="table table-hover">
+           <thead>
+               <tr>
+                   <th>가게번호</th>
+                   <th>메뉴이름</th>
+                   <th>가격</th>
+                   <th>카테고리</th>
+               </tr>
+           </thead>
+           <tbody>
+            <% @menus.each do |m| %>
+               <tr>
+                 <td><a href="/home/search_result_store/<%= m.store_id %>"><%= m.store_id %></a></td> 
+                 <td><%= m.menu_name %></td>
+                 <td><%= m.price %></td>
+                 <td><%= m.menu_category %></td>
+               </tr>
+            <% end %>
+           </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="user">
+       <table class="table table-hover">
+           <thead>
+               <tr>
+                   <th>회원아이디</th>
+                   <th>로그인빈도수</th>
+                   <th>마지막로그인시간</th>
+                   <th>마지막로그인한IP주소</th>
+                   <th>회원가입일자</th>
+               </tr>
+           </thead>
+           <tbody>
+            <% @users.each do |u| %>
+               <tr>
+                 <td><%= u.email %></td> 
+                 <td><%= u.sign_in_count %></td>
+                 <td><%= u.last_sign_in_at %></td>
+                 <td><%= u.last_sign_in_ip %></td>
+                 <td><%= u.created_at %></td>
+               </tr>
+            <% end %>
+           </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="review">
+       <table class="table table-hover">
+           <thead>
+               <tr>
+                   <th>회원아이디</th>
+                   <th>가게번호</th>
+                   <th>유저아이디</th>
+                   <th>작성시간</th>
+                   <th>수정시간<th>
+               </tr>
+           </thead>
+           <tbody>
+            <% @reviews.each do |r| %>
+               <tr>
+                 <td><%= r.content %></td> 
+                 <td><a href="/home/search_result_store/<%= r.store_id %>"><%= r.store_id %></a></td>
+                 <td><%= r.user.id %></td>
+                 <td><%= r.created_at %></td>
+                 <td><%= r.updated_at %></td>
+               </tr>
+            <% end %>
+           </tbody>
+        </table>
+      </div>
+    </div>
   
   </div>
-  <% Store.all.each do |s| %>
-   <%= s.store_name %>
-   <%= s.keyword %>
-  <% end %>
+  <script>
+   $('#myTabs a').click(function (e) {
+     e.preventDefault()
+     $(this).tab('show')
+   })
+  </script>

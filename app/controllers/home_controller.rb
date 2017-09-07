@@ -116,9 +116,13 @@ class HomeController < ApplicationController
   end
   
   def board
-     @post = Ask.new
-     authorize_action_for @post    
-     @posts = Ask.all
+    @post = Ask.new
+    authorize_action_for @post
+    @posts = Ask.all
+    @stores = Store.all
+    @menus = Menu.all
+    @users = User.all
+    @reviews = Review.all
   end
   
   def ask_show
@@ -153,4 +157,5 @@ class HomeController < ApplicationController
     
     @menus = Menu.all
   end
+  
 end
