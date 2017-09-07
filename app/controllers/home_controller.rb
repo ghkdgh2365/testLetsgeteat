@@ -135,11 +135,11 @@ class HomeController < ApplicationController
   def board
     @post = Ask.new
     authorize_action_for @post
-    @posts = Ask.all
+    @posts = Ask.all.order(id: :asc)
     @stores = Store.all.order(id: :asc)
-    @menus = Menu.all
-    @users = User.all
-    @reviews = Review.all
+    @menus = Menu.all.order(id: :asc)
+    @users = User.all.order(id: :asc)
+    @reviews = Review.all.order(id: :asc)
   end
   
   def ask_show
