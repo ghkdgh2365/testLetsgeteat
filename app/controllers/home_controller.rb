@@ -136,7 +136,7 @@ class HomeController < ApplicationController
     @post = Ask.new
     authorize_action_for @post
     @posts = Ask.all
-    @stores = Store.all
+    @stores = Store.all.order(id: :asc)
     @menus = Menu.all
     @users = User.all
     @reviews = Review.all
