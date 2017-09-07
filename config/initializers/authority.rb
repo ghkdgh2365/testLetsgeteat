@@ -32,7 +32,9 @@ Authority.configure do |config|
     :input_db => 'update',
     :ask_show => 'update',
     :store_edit => 'update',
-    :store_update => 'update'
+    :store_update => 'update',
+    :menu_edit => 'update',
+    :menu_update => 'update'
   }
 
   # ABILITIES

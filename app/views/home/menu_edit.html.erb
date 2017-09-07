@@ -1,0 +1,22 @@
+<div class="container">
+    <form action="/home/menu_update/<%= @menu.id %>" method="post">
+      <div class="form-group">
+        <label for="store_id">가게번호</label>
+        <input type="text" class="form-control" id="store_id" name="store_id" value="<%= @menu.store_id %>">
+      </div>
+      <div class="form-group">
+        <label for="menu_name">메뉴이름</label>
+        <input type="text" class="form-control" id="menu_name" name="menu_name" value="<%= @menu.menu_name %>">
+      </div>
+      <div class="form-group">
+        <label for="price">가격</label>
+        <input type="text" class="form-control" id="price" name="price" value="<%= @menu.price %>">
+      </div>
+      <div class="form-group">
+        <label for="menu_category">메뉴카테고리</label>
+        <input type="text" class="form-control" id="menu_category" name="menu_category" value="<%= @menu.menu_category %>">
+      </div>
+      <button type="submit" class="btn">수정하기</button>
+    </form>
+    <a href="/home/board">뒤로가기</a>
+</div>

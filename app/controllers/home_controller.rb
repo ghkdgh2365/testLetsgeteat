@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   require 'csv'
-  before_action :authenticate_user!, only: [ :review_write, :write, :registration, :board, :ask_show]
+  before_action :authenticate_user!, only: [ :review_write, :write, :registration, :board, :ask_show, :store_edit, :store_update, :menu_edit, :menu_update]
   def index
   end
 
@@ -176,6 +176,25 @@ class HomeController < ApplicationController
     @store.address = params[:address]
     
     @store.save
+    redirect_to '/home/board'
+  end
+  
+  def menu_edit
+    @post = Ask.new
+    authorize_action_for @post
+    @menu = Menu.find(params[:id])
+  end
+  
+  def menu_update
+    @post = Ask.new
+    authorize_action_for @post
+    @menu = Menu.find(params[:id])
+    @menu.store_id = params[:store_id]
+    @menu.menu_name = params[:menu_name]
+    @menu.price = params[:price]
+    @menu.menu_category = params[:menu_category]
+    @menu.save
+    
     redirect_to '/home/board'
   end
   

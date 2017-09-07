@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get 'home/search_result_store/:ssr_id' => 'home#search_result_store'
   get 'home/store_edit/:id' => 'home#store_edit'
   post 'home/store_update/:id' => 'home#store_update'
+  get 'home/menu_edit/:id' => 'home#menu_edit'
+  post 'home/menu_update/:id' => 'home#menu_update'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
