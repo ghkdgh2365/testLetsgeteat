@@ -228,7 +228,7 @@ class HomeController < ApplicationController
   def input_db
     @post = Ask.new
     authorize_action_for @post
-    CSV.foreach('bob_database.csv', :headers => true , :encoding => 'euc-kr') do |row|
+    CSV.foreach('add_store.csv', :headers => true , :encoding => 'euc-kr') do |row|
       Store.create!(row.to_hash)
     end
       # csv_text = File.open('bob_database.csv', "r:ISO-8859-1")
@@ -237,7 +237,7 @@ class HomeController < ApplicationController
       #   Store.create!(row.to_hash)
       # end
     @stores = Store.all
-    CSV.foreach('bob_menu.csv', :headers => true , :encoding => 'euc-kr') do |row|
+    CSV.foreach('add_menu.csv', :headers => true , :encoding => 'euc-kr') do |row|
       Menu.create!(row.to_hash)
     end
     
