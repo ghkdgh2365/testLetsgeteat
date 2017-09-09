@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   post 'home/store_update/:id' => 'home#store_update'
   get 'home/menu_edit/:id' => 'home#menu_edit'
   post 'home/menu_update/:id' => 'home#menu_update'
+  post 'home/thumb_up'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
          
   has_many :reviews, dependent: :destroy
   has_many :asks, dependent: :destroy
+  has_many :joayos
+  has_many :stores, :through => :joayos
   
   after_create :set_default_role, if: Proc.new { User.count > 1 }
 

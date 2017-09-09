@@ -66,7 +66,119 @@
             });
             //]]>
         </script>
-	</h5>
+	<style>
+        .wrapper-demo {
+          text-align: center;
+          margin-top: 0vh;
+        }
+        :focus {
+          outline: none;
+        }
+        button:focus{
+            background-color: transparent;
+        }
+        /* == Unicodes cheatsheet ==
+         http://fontawesome.bootstrapcheatsheets.com
+         */
+        .toggle-icon {
+          width: 22pt;
+          height: 22pt;
+          font-size: 22pt;
+          position: relative;
+          color: gray;
+          cursor: pointer;
+          border: none;
+          background-color: transparent;
+          padding-bottom: 9px;
+        }
+        .toggle-icon:before, .toggle-icon:after {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transition: all 0.3s ease-out;
+          content: "\f08a";
+          font-family: fontawesome;
+        }
+        .toggle-icon:hover:before {
+          transform: scale(1.2);
+        }
+        .toggle-icon:active:before {
+          transition: none;
+          transform: scale(1);
+        }
+        .toggle-icon:after {
+          opacity: 0;
+        }
+        .toggle-icon.-checked {
+          color: #a12c2c;
+        }
+        .toggle-icon.-checked:before {
+          content: "\f004";
+        }
+        .toggle-icon.-checked:after {
+          content: "\f004";
+          animation: likeFly 0.4s ease-in;
+        }
+        @keyframes heartbeat {
+          from {
+            opacity: 1;
+          }
+          to {
+            transform: scale(3);
+            opacity: 0;
+          }
+        }
+        @keyframes likeFly {
+          from {
+            opacity: 1;
+          }
+          to {
+            transform: scale(3) rotate(45deg) translateY(-90px);
+            opacity: 0;
+          }
+        }
+	</style>
+	      <% @store_id = @one_result.id %>
+	      <% unless current_user == nil %>
+              <% unless Joayo.find_by(user_id: current_user.id, store_id: @store_id) == nil %>
+                  <% @thumb = Joayo.find_by(user_id: current_user.id, store_id: @store_id).thumb_up %>
+                  <% if @thumb == 1 %>
+                      <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요취소!</button>-->
+                      <button class="toggle-icon -checked" id="thumb_up_submit"></button>
+                  <% else %>
+                      <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요!</button>-->
+                      <button class="toggle-icon" id="thumb_up_submit"></button>
+                  <% end %>
+              <% else %>
+                  <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요!</button>-->
+                      <button class="toggle-icon" id="thumb_up_submit"></button>
+              <% end %>
+          <% else %>
+              <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요!</button>-->
+                  <button class="toggle-icon" id="thumb_up_submit"></button>
+          <% end %>
+    	    <script>
+    	        $( "#thumb_up_submit" ).click(function() {
+    	            <% @current_user_id = current_user.id if current_user.present? %>
+    	            <% unless @current_user_id == nil %>
+        			    store_id = <%= @one_result.id %>;
+        			    $.ajax({
+        			      method: "POST",
+        			      url: "/home/thumb_up",
+        			      data: { store_id: store_id },
+        			      success:function(){
+        			         $('.toggle-icon').toggleClass('-checked');
+                          },
+                          error:function(request,status,error){
+                            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                           }
+        			    })
+    	            <% else %>
+    	                alert("로그인 후 눌러주세요.");
+    	            <% end %>
+    			});
+            </script>
+    </h5>
     <div class="col-xs-12 col-md-12" id="detail_tip">
         	<p class="detail">
         		<%=@one_result.food_category %> | <%=@one_result.distance %>거리

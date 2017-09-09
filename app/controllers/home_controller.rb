@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   require 'csv'
-  before_action :authenticate_user!, only: [ :review_write, :write, :registration, :board, :ask_show, :store_edit, :store_update, :menu_edit, :menu_update]
+  before_action :authenticate_user!, only: [ :review_write, :write, :registration, :board, :ask_show, :store_edit, :store_update, :menu_edit, :menu_update, :thumb_up]
   def index
   end
 
@@ -203,6 +203,26 @@ class HomeController < ApplicationController
     @menu.save
     
     redirect_to '/home/board'
+  end
+  
+  def thumb_up
+      @user_id = current_user.id
+      @joayo = Joayo.find_by(user_id: @user_id, store_id: params[:store_id])
+      if @joayo == nil
+        @joayo = Joayo.new
+        @joayo.user_id = @user_id
+        @joayo.store_id = params[:store_id]
+        @joayo.thumb_up = 1
+        @joayo.save
+      else 
+        if @joayo.thumb_up == 0
+        @joayo.thumb_up = 1
+        @joayo.save
+        else
+          @joayo.thumb_up = 0
+          @joayo.save
+        end
+      end
   end
   
   def input_db
