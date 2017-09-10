@@ -1,46 +1,174 @@
-<div class="container">
-
-  <!--<h2> <%= resource_name.to_s.humanize %></h2>-->
-  <h4>회원정보수정</h4>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
-  
-    <!--<div class="field">-->
-    <!--  <%= f.label :email %><br />-->
-    <!--  <%= f.email_field :email, autofocus: true %>-->
-    <!--</div>-->
-  
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-    <% end %>
-  
-    <div class="field">
-      <%= f.label :password, "새로운 비밀번호" %> <i>(비밀번호 변경을 원치 않으시면 빈칸으로 두세요.)</i><br />
-      <%= f.password_field :password, autocomplete: "off" %>
-      <% if @minimum_password_length %>
-        <br />
-        <em><%= @minimum_password_length %>글자 이상 입력해주세요.</em>
-      <% end %>
-    </div>
-  
-    <div class="field">
-      <%= f.label :password_confirmation, "비밀번호 확인" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
-    </div>
-  
-    <div class="field">
-      <%= f.label :current_password, "현재 비밀번호" %><br />
-      <%= f.password_field :current_password, autocomplete: "off" %>
-    </div>
-  
-    <div class="actions">
-      <%= f.submit "비밀번호 변경하기", :class => 'btn waves-effect waves-light' %>
-    </div>
-  <% end %>
-  
-  <h4>회원탈퇴</h4>
-  
-  <p>회원탈퇴를 원하시나요? <%= button_to "회원탈퇴", registration_path(resource_name), data: { confirm: "탈퇴하시겠습니까?" }, method: :delete %></p>
-  
-  <%= link_to "뒤로가기", :back %>
+<style>
+      .wrapper-demo {
+        text-align: center;
+        margin-top: 0vh;
+      }
+      :focus {
+        outline: none;
+      }
+      button:focus{
+          background-color: transparent;
+      }
+      /* == Unicodes cheatsheet ==
+       http://fontawesome.bootstrapcheatsheets.com
+       */
+      .toggle-icon {
+        width: 22pt;
+        height: 22pt;
+        font-size: 22pt;
+        position: relative;
+        color: gray;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        padding-bottom: 9px;
+      }
+      .toggle-icon:before, .toggle-icon:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.3s ease-out;
+        content: "\f08a";
+        font-family: fontawesome;
+      }
+      .toggle-icon:hover:before {
+        transform: scale(1.2);
+      }
+      .toggle-icon:active:before {
+        transition: none;
+        transform: scale(1);
+      }
+      .toggle-icon:after {
+        opacity: 0;
+      }
+      .toggle-icon.-checked {
+        color: #a12c2c;
+      }
+      .toggle-icon.-checked:before {
+        content: "\f004";
+      }
+      .toggle-icon.-checked:after {
+        content: "\f004";
+        animation: likeFly 0.4s ease-in;
+      }
+      @keyframes heartbeat {
+        from {
+          opacity: 1;
+        }
+        to {
+          transform: scale(3);
+          opacity: 0;
+        }
+      }
+      @keyframes likeFly {
+        from {
+          opacity: 1;
+        }
+        to {
+          transform: scale(3) rotate(45deg) translateY(-90px);
+          opacity: 0;
+        }
+      }
+</style>
+<div class="container" style="padding-top:20px;">
+    <ul class="nav nav-tabs">
+			<li role="presentation" class="tab col-xs-6 active"><a href="#home" aria-controls="home" style="color: #ee6e73;" role="tab" data-toggle="tab">좋아요한 가게</a></li>
+			<li role="presentation" class="tab col-xs-6"><a href="#profile" aria-controls="profile" style="color: #ee6e73;" role="tab" data-toggle="tab">회원정보수정</a></li>
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="home">
+			  <ul class="collection with-header">
+          <li class="collection-header"><h4>좋아요리스트</h4></li>
+          <% Joayo.where(user_id: current_user.id, thumb_up: 1).each do |m| %>
+          <li class="collection-item">
+            <div><a href="/home/search_result_store/<%= m.store_id %>"><%= Store.find(m.store_id).store_name %></a>
+              <% @store_id = m.store_id %>
+    	        <% unless current_user == nil %>
+                  <% unless Joayo.find_by(user_id: current_user.id, store_id: @store_id) == nil %>
+                      <% @thumb = Joayo.find_by(user_id: current_user.id, store_id: @store_id).thumb_up %>
+                      <% if @thumb == 1 %>
+                          <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요취소!</button>-->
+                          <button class="toggle-icon -checked secondary-content" id="thumb_up_submit_<%= @store_id %>"></button>
+                      <% else %>
+                          <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요!</button>-->
+                          <button class="toggle-icon secondary-content" id="thumb_up_submit_<%= @store_id %>"></button>
+                      <% end %>
+                  <% else %>
+                      <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요!</button>-->
+                          <button class="toggle-icon secondary-content" id="thumb_up_submit_<%= @store_id %>"></button>
+                  <% end %>
+              <% else %>
+                  <!--<button type="submit" class="btn thumb_up_sumbit" id="thumb_up_submit">좋아요!</button>-->
+                      <button class="toggle-icon secondary-content" id="thumb_up_submit_<%= @store_id %>"></button>
+              <% end %>
+              	    <script>
+              	        $( "#thumb_up_submit_<%= m.store_id %>" ).click(function() {
+              	            <% @current_user_id = current_user.id if current_user.present? %>
+              	            <% unless @current_user_id == nil %>
+                  			    store_id = <%= m.store_id %>;
+                  			    $.ajax({
+                  			      method: "POST",
+                  			      url: "/home/thumb_up",
+                  			      data: { store_id: store_id },
+                  			      success:function(){
+                  			         $('#thumb_up_submit_<%= m.store_id %>').toggleClass('-checked');
+                                    },
+                                    error:function(request,status,error){
+                                      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                                     }
+                  			    })
+              	            <% else %>
+              	                alert("로그인 후 눌러주세요.");
+              	            <% end %>
+              			});
+                </script>
+              </div>
+            </li>
+              <% end %>
+        </ul>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="profile">
+			    <!--<h2> <%= resource_name.to_s.humanize %></h2>-->
+        <h4>회원정보수정</h4>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= devise_error_messages! %>
+          
+            <!--<div class="field">-->
+            <!--  <%= f.label :email %><br />-->
+            <!--  <%= f.email_field :email, autofocus: true %>-->
+            <!--</div>-->
+          
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+          
+            <div class="field">
+              <%= f.label :password, "새로운 비밀번호" %> <i>(비밀번호 변경을 원치 않으시면 빈칸으로 두세요.)</i><br />
+              <%= f.password_field :password, autocomplete: "off" %>
+              <% if @minimum_password_length %>
+                <br />
+                <em><%= @minimum_password_length %>글자 이상 입력해주세요.</em>
+              <% end %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :password_confirmation, "비밀번호 확인" %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :current_password, "현재 비밀번호" %><br />
+              <%= f.password_field :current_password, autocomplete: "off" %>
+            </div>
+          
+            <div class="actions">
+              <%= f.submit "비밀번호 변경하기", :class => 'btn waves-effect waves-light' %>
+            </div>
+          <% end %>
+					<h4>회원탈퇴</h4>
+					<p>회원탈퇴를 원하시나요? <%= button_to "회원탈퇴", registration_path(resource_name), data: { confirm: "탈퇴하시겠습니까?" }, method: :delete %></p>
+			</div>
+			<hr/>
+  <%= link_to "뒤로가기", :back, :class => "btn btn-inverse" %>
 </div>
