@@ -21,6 +21,7 @@ class HomeController < ApplicationController
     @walk3 = params[:walkbox3]
     @food_category = params[:boxbox]
     @price= params[:pricebox]
+    @joayo = params[:joayo]
     unless @walk0 == nil && @walk1 == nil && @walk2 == nil && @walk3 == nil && @food_category == nil && @price == nil
       if @walk0 == nil && @walk1 == nil && @walk2 == nil && @walk3 == nil
         @walk0 = '배달'
@@ -38,7 +39,16 @@ class HomeController < ApplicationController
         @price = [@price1, @price2, @price3]
       end
     end
-    @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "%#{@walk0}%", "%#{@walk1}%", "%#{@walk2}%", "%#{@walk3}%")
+    if @joayo == 1
+      @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "#{@walk0}", "#{@walk1}", "#{@walk2}", "#{@walk3}")
+    else
+      @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "#{@walk0}", "#{@walk1}", "#{@walk2}", "#{@walk3}")
+      if @stores.blank?
+        @stores = Store.all.joins(:joayos).where("joayos.thumb_up = ?", 1)
+      else
+        @stores = @stores.joins(:joayos).where("joayos.thumb_up = ?", 1)
+      end
+    end
     @store = @stores.sample(1)
     @store.each do |s|
       @store_id = s.id
