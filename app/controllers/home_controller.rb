@@ -39,15 +39,15 @@ class HomeController < ApplicationController
         @price = [@price1, @price2, @price3]
       end
     end
-    if @joayo == 1
-      @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "#{@walk0}", "#{@walk1}", "#{@walk2}", "#{@walk3}")
-    else
+    if @joayo == "a"
       @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "#{@walk0}", "#{@walk1}", "#{@walk2}", "#{@walk3}")
       if @stores.blank?
         @stores = Store.all.joins(:joayos).where("joayos.thumb_up = ?", 1)
       else
         @stores = @stores.joins(:joayos).where("joayos.thumb_up = ?", 1)
       end
+    else
+      @stores = Store.where(food_category: [@food_category], price_feel: [@price]).where("distance LIKE ? or distance LIKE ? or distance LIKE ? or distance LIKE ?", "#{@walk0}", "#{@walk1}", "#{@walk2}", "#{@walk3}")
     end
     @store = @stores.sample(1)
     @store.each do |s|

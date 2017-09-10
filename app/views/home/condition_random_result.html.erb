@@ -332,8 +332,17 @@
     					  <label for="price3">$$$</label>
     					</div>
     		            <hr/>
-		                <input type="checkbox" class="filled-in" id="joayo" name="joayo" value="1" />
+		                <input type="checkbox" class="filled-in" id="joayo" name="joayo" value="a"/>
                         <label for="joayo">좋아요한 가게</label>
+                        <script>
+                            $( "#joayo" ).click(function() {
+                               <% if current_user == nil %>
+                                    alert( "로그인을 해주세요" );
+                                    $( "#joayo" ).prop( "checked", false );
+                               <% end %>
+                            });
+                        </script>
+                        <%= @joayo %>
 					<div class="search_option" type="submit" name="">
 					    <button type="submit" class="btn waves-effect waves-light" role="button" style="width:100%;">조건 안에서 랜덤</button>
 					</div>
@@ -341,7 +350,7 @@
 			</div>
 		    </span>
 		</li>
-	</ul><%= @joayo %>
+	</ul>
 	<a href="/home/random_result" class="btn waves-effect waves-light" style="width:100%;background-color:#ee6e73;">랜덤</a>
 	
 			
