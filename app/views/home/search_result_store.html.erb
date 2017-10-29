@@ -268,7 +268,7 @@
 			      url: "review_write",
 			      data: { content: r_content, store_id: store_id },
 			      success:function(){
-                        var insTag = "<div class='panel panel-default'><div class='panel-body' id='review_body'><div class='panelheader'><font color='#9e9e9e'>2017-08-08</font> <p></p> </div></div>";
+                        var insTag = "<div class='panel panel-default'><div class='panel-body' id='review_body'><div class='panelheader'><font color='#9e9e9e'><%=Date.today%></font> <p></p> </div></div>";
                         $("#myList").prepend(insTag);
                         $("p").last().prepend(r_content);
                         // $(".r_number").attr('id', "rcontent_"+r_number );
